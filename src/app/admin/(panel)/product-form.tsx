@@ -120,7 +120,7 @@ export function ProductForm({ product, categories }: { product?: Product; catego
           <span className="mb-1 block text-sm font-semibold text-ink">Product name *</span>
           <input name="name" required defaultValue={product?.name} className={inputClass} placeholder="e.g. Vitamin C 1000mg, 60 tablets" />
         </label>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-3">
           <label className="block">
             <span className="mb-1 block text-sm font-semibold text-ink">Price (TSh)</span>
             <input
@@ -128,7 +128,17 @@ export function ProductForm({ product, categories }: { product?: Product; catego
               inputMode="numeric"
               defaultValue={product?.price ?? ""}
               className={inputClass}
-              placeholder="Leave empty for “Call for price”"
+              placeholder="Empty = “Call for price”"
+            />
+          </label>
+          <label className="block">
+            <span className="mb-1 block text-sm font-semibold text-ink">Old price (TSh), optional</span>
+            <input
+              name="old_price"
+              inputMode="numeric"
+              defaultValue={product?.old_price ?? ""}
+              className={inputClass}
+              placeholder="Higher = shows “Sale!”"
             />
           </label>
           <label className="block">

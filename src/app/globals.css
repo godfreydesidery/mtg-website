@@ -2,22 +2,22 @@
 
 /* MTG brand colours, taken from the logo: navy lettering, green bag and plane. */
 @theme {
-  --color-navy-50: #eef3fb;
-  --color-navy-100: #d6e1f3;
-  --color-navy-600: #12428a;
-  --color-navy-700: #0c3573;
-  --color-navy-800: #0a2c5f;
-  --color-navy-900: #081f44;
-  --color-leaf-50: #edf7ed;
-  --color-leaf-100: #d3ecd3;
-  --color-leaf-500: #2a9a2a;
-  --color-leaf-600: #1f7f1f;
-  --color-leaf-700: #186618;
+  --color-navy-50: #eef3fa;
+  --color-navy-100: #d4e0f1;
+  --color-navy-600: #0b3f8c;
+  --color-navy-700: #04306e;
+  --color-navy-800: #03275a;
+  --color-navy-900: #021a3d;
+  --color-leaf-50: #eef8ea;
+  --color-leaf-100: #d2edc8;
+  --color-leaf-500: #2c9a12;
+  --color-leaf-600: #147806;
+  --color-leaf-700: #0f5f04;
   --color-ink: #13203a;
   --color-muted: #5b6780;
   --color-line: #e3e8f0;
   --color-paper: #f6f8fb;
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-poppins);
 }
 
 :root {

@@ -8,6 +8,6 @@ export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseKey);
 export const PHOTO_BUCKET = "product-photos";
 
 export function photoUrl(path: string) {
-  if (/^https?:\/\//.test(path)) return path;
+  if (/^https?:\/\//.test(path) || path.startsWith("/")) return path; // full URL or a file in /public
   return `${supabaseUrl}/storage/v1/object/public/${PHOTO_BUCKET}/${path}`;
 }

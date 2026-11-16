@@ -17,7 +17,7 @@ A product catalogue for MTG. Customers browse products and order on WhatsApp. Th
 | `/admin/products/new` | Add product: photos from camera or gallery (shrunk on the phone before upload), name, price, category, description, in stock, featured |
 | `/admin/categories` | Add, rename, delete categories |
 
-Leaving the price empty shows "Call for price". A hidden or deleted product's link shows "This product is no longer available" instead of an error.
+Leaving the price empty shows "Call for price". Filling in an **old price** higher than the price shows it crossed out with a **Sale!** badge. A hidden or deleted product's link shows "This product is no longer available" instead of an error.
 
 ### Languages: English and Swahili
 
@@ -54,7 +54,7 @@ npm install
 npm run dev                  # http://localhost:3000, admin at /admin
 ```
 
-Without the keys the site still runs as a preview: categories show, products are empty and admin login is disabled.
+Without the keys the site runs in **preview mode**: it shows sample products (from [src/lib/preview-data.ts](src/lib/preview-data.ts), with drawings in `public/demo/`) and a yellow "Preview" notice, so the design can be shown to the client. Admin login is disabled. Once the keys are added, only the real products appear.
 
 ### 3. Deploy to Vercel
 
@@ -70,7 +70,7 @@ In Vercel, **Settings → Domains**: add `mtgsuppliers.com` and `www.mtgsupplier
 
 ## Notes
 
-- **Logo:** the header uses a text version of the logo. To use the official image, save it as `public/logo.png` and swap it into [src/components/logo.tsx](src/components/logo.tsx).
+- **Logo:** made from the client's logo image. `public/logo-wide.png` (header and footer), `public/logo.png` (original stacked layout), `public/logo-mark.png` (symbol only), `public/og.png` (link previews), and `src/app/icon.png` / `apple-icon.png` (browser tab and phone home screen). Brand colours in `globals.css` match the logo: navy `#04306e`, green `#147806`.
 - **Updates show immediately:** public pages are cached and refreshed the moment the admin saves.
 - **Backups:** the free plan has no automatic backups. Export the `products` table (Table Editor → Export to CSV) now and then, or move to Supabase Pro.
 - **Photo space:** photos are about 150–300 KB each after shrinking, so the free 1 GB holds roughly 4,000 or more.

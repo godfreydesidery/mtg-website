@@ -5,6 +5,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import type { Locale } from "@/lib/i18n";
 
 type Labels = { home: string; products: string; contact: string };
+type Variant = "bar" | "menu";
 
 function items(locale: Locale, labels: Labels) {
   return [
@@ -14,27 +15,37 @@ function items(locale: Locale, labels: Labels) {
   ];
 }
 
-const base = "rounded-lg px-2 py-2 sm:px-3";
+const styles: Record<Variant, { base: string; active: string; idle: string }> = {
+  // Dark menu bar (desktop)
+  bar: {
+    base: "flex items-center px-5 text-[13px] font-semibold uppercase tracking-wide",
+    active: "text-leaf-500",
+    idle: "text-white hover:text-leaf-500",
+  },
+  // Phone menu panel
+  menu: {
+    base: "block rounded-lg px-3 py-2.5 font-semibold",
+    active: "bg-navy-50 text-navy-700",
+    idle: "text-ink hover:bg-navy-50",
+  },
+};
 
 /** Plain links, shown for the split second before the current page is known. */
-export function PlainNavLinks({ locale, labels }: { locale: Locale; labels: Labels }) {
+export function PlainNavLinks({ locale, labels, variant }: { locale: Locale; labels: Labels; variant: Variant }) {
+  const s = styles[variant];
   return items(locale, labels).map(({ href, label }) => (
-    <Link key={href} href={href} className={`${base} hover:bg-navy-50`}>{label}</Link>
+    <Link key={href} href={href} className={`${s.base} ${s.idle}`}>{label}</Link>
   ));
 }
 
 /** Highlights the page you're on. Must sit inside <Suspense> (it reads the URL). */
-export function NavLinks({ locale, labels }: { locale: Locale; labels: Labels }) {
+export function NavLinks({ locale, labels, variant }: { locale: Locale; labels: Labels; variant: Variant }) {
   const pathname = usePathname();
+  const s = styles[variant];
   return items(locale, labels).map(({ href, label }) => {
     const active = href === `/${locale}` ? pathname === href : pathname.startsWith(href);
     return (
-      <Link
-        key={href}
-        href={href}
-        aria-current={active ? "page" : undefined}
-        className={`${base} ${active ? "bg-navy-50 text-navy-700" : "hover:bg-navy-50"}`}
-      >
+      <Link key={href} href={href} aria-current={active ? "page" : undefined} className={`${s.base} ${active ? s.active : s.idle}`}>
         {label}
       </Link>
     );
@@ -48,7 +59,7 @@ const langs: { code: Locale; short: string; name: string }[] = [
 
 function Switch({ locale, hrefFor }: { locale: Locale; hrefFor: (code: Locale) => string }) {
   return (
-    <div className="flex overflow-hidden rounded-lg border border-line text-xs font-bold" role="group" aria-label="Lugha / Language">
+    <div className="flex overflow-hidden rounded-md border border-white/40 text-xs font-bold" role="group" aria-label="Language / Lugha">
       {langs.map(({ code, short, name }) => (
         <Link
           key={code}
@@ -58,7 +69,7 @@ function Switch({ locale, hrefFor }: { locale: Locale; hrefFor: (code: Locale) =
           title={name}
           aria-label={name}
           aria-current={code === locale ? "true" : undefined}
-          className={`px-2 py-1.5 ${code === locale ? "bg-navy-700 text-white" : "bg-white text-ink hover:bg-navy-50"}`}
+          className={`px-2.5 py-1 ${code === locale ? "bg-white text-leaf-700" : "text-white hover:bg-white/15"}`}
         >
           {short}
         </Link>

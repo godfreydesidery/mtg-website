@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { geistSans } from "./fonts";
+import { poppins } from "./fonts";
 import "./globals.css";
 
 export const metadata: Metadata = { title: "Page not found | Ukurasa haupatikani" };
@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "Page not found | Ukurasa haupatikani
 // Shown for addresses that match no page at all.
 export default function GlobalNotFound() {
   return (
-    <html lang="en" className={`${geistSans.variable} h-full antialiased`}>
+    <html lang="en" className={`${poppins.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-sans">
         <main className="mx-auto max-w-xl flex-1 px-4 py-24 text-center">
           <p className="text-sm font-bold uppercase tracking-wider text-leaf-600">404</p>

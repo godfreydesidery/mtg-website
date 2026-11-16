@@ -8,9 +8,11 @@ export async function SiteFooter() {
   const { locale, t } = await getI18n();
   return (
     <footer className="mt-auto bg-navy-900 text-navy-100">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:grid-cols-3">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:grid-cols-3">
         <div className="space-y-3">
-          <Logo href={`/${locale}`} label={t.logoLabel} light />
+          <div className="inline-block rounded-lg bg-white px-4 py-3">
+            <Logo href={`/${locale}`} label={t.logoLabel} className="h-12 w-auto" />
+          </div>
           <p className="max-w-xs text-sm text-navy-100/80">{t.siteDescription}</p>
         </div>
         <div>
@@ -37,7 +39,7 @@ export async function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-white/10">
-        <p className="mx-auto max-w-6xl px-4 py-5 text-xs text-navy-100/70">© {site.name}. {t.footer.note}</p>
+        <p className="mx-auto max-w-7xl px-4 py-5 text-xs text-navy-100/70">© {site.name}. {t.footer.note}</p>
       </div>
     </footer>
   );

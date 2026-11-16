@@ -11,6 +11,7 @@ export type Product = {
   name: string;
   category_id: number | null;
   price: number | null;
+  old_price: number | null;
   description: string;
   description_sw: string | null;
   images: string[];
@@ -21,6 +22,6 @@ export type Product = {
 };
 
 export const PRODUCT_COLUMNS =
-  "id, slug, name, category_id, price, description, description_sw, images, in_stock, is_featured, is_visible, created_at";
+  "id, slug, name, category_id, price, old_price, description, description_sw, images, in_stock, is_featured, is_visible, created_at";
 
 export const CATEGORY_COLUMNS = "id, name, name_sw, slug";

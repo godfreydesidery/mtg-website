@@ -59,6 +59,7 @@ create table if not exists public.products (
   name text not null,
   category_id bigint references public.categories (id) on delete set null,
   price numeric(14, 0) check (price is null or price >= 0), -- TSh; null = "Call for price"
+  old_price numeric(14, 0) check (old_price is null or old_price >= 0), -- optional; higher than price = "Sale!" badge
   description text not null default '',
   description_sw text,                                      -- Swahili description (optional; English is used if empty)
   images text[] not null default '{}',                      -- paths in the product-photos bucket; first = main photo
@@ -70,6 +71,7 @@ create table if not exists public.products (
 );
 
 alter table public.products add column if not exists description_sw text;
+alter table public.products add column if not exists old_price numeric(14, 0) check (old_price is null or old_price >= 0);
 
 create index if not exists products_category_idx on public.products (category_id);
 create index if not exists products_created_idx on public.products (created_at desc);

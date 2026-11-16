@@ -59,3 +59,59 @@ export function BagIcon({ className = "size-5" }: IconProps) {
     </svg>
   );
 }
+
+const stroke = {
+  viewBox: "0 0 24 24",
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 2,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+  "aria-hidden": true,
+};
+
+export function TruckIcon({ className = "size-5" }: IconProps) {
+  return (
+    <svg {...stroke} className={className}>
+      <path d="M1 4h13v11H1z" />
+      <path d="M14 8h4l4 4v3h-8z" />
+      <circle cx="5.5" cy="17.5" r="2" />
+      <circle cx="17.5" cy="17.5" r="2" />
+    </svg>
+  );
+}
+
+export function StoreIcon({ className = "size-5" }: IconProps) {
+  return (
+    <svg {...stroke} className={className}>
+      <path d="M3 9 4.5 4h15L21 9" />
+      <path d="M3 9a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0" />
+      <path d="M5 11v9h14v-9" />
+      <path d="M10 20v-5h4v5" />
+    </svg>
+  );
+}
+
+export function MenuIcon({ className = "size-5" }: IconProps) {
+  return (
+    <svg {...stroke} className={className}>
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  );
+}
+
+export function ChevronDownIcon({ className = "size-4" }: IconProps) {
+  return (
+    <svg {...stroke} className={className}>
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  );
+}
+
+export function ArrowRightIcon({ className = "size-4" }: IconProps) {
+  return (
+    <svg {...stroke} className={className}>
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+  );
+}
