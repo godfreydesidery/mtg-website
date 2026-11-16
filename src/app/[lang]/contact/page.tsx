@@ -23,7 +23,7 @@ export default async function ContactPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:py-12">
       <h1 className="text-2xl font-black tracking-tight text-ink sm:text-3xl">{c.title}</h1>
       <p className="mt-2 max-w-xl text-muted">{c.intro}</p>
 

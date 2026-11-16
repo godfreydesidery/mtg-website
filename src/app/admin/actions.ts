@@ -49,6 +49,7 @@ export async function saveProduct(_prev: FormState, formData: FormData): Promise
   const id = String(formData.get("id") ?? "") || null;
   const name = String(formData.get("name") ?? "").trim();
   const priceRaw = String(formData.get("price") ?? "").replace(/[^\d]/g, "");
+  const oldPriceRaw = String(formData.get("old_price") ?? "").replace(/[^\d]/g, "");
   const categoryRaw = String(formData.get("category_id") ?? "");
   const images = parseImages(formData.get("images"));
 
@@ -58,6 +59,7 @@ export async function saveProduct(_prev: FormState, formData: FormData): Promise
   const fields = {
     name,
     price: priceRaw ? Number(priceRaw) : null,
+    old_price: oldPriceRaw ? Number(oldPriceRaw) : null,
     category_id: categoryRaw ? Number(categoryRaw) : null,
     description: String(formData.get("description") ?? "").trim(),
     description_sw: String(formData.get("description_sw") ?? "").trim() || null,

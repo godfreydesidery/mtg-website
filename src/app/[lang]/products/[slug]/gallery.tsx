@@ -9,7 +9,7 @@ export function Gallery({ images, name, showPhotoLabel }: { images: string[]; na
 
   return (
     <div>
-      <div className="relative aspect-square overflow-hidden rounded-2xl border border-line bg-white">
+      <div className="relative aspect-square overflow-hidden border border-line bg-white">
         {current && (
           <Image src={current} alt={name} fill priority sizes="(min-width: 768px) 50vw, 100vw" className="object-contain p-4" />
         )}
@@ -23,7 +23,7 @@ export function Gallery({ images, name, showPhotoLabel }: { images: string[]; na
               onClick={() => setActive(i)}
               aria-label={`${showPhotoLabel} ${i + 1}`}
               aria-current={i === active}
-              className={`relative size-16 shrink-0 overflow-hidden rounded-lg border-2 bg-white sm:size-20 ${i === active ? "border-navy-700" : "border-line"}`}
+              className={`relative size-16 shrink-0 overflow-hidden border-2 bg-white sm:size-20 ${i === active ? "border-leaf-600" : "border-line"}`}
             >
               <Image src={src} alt="" fill sizes="80px" className="object-contain p-1" />
             </button>

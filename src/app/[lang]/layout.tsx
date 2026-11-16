@@ -3,9 +3,10 @@ import { notFound } from "next/navigation";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { WhatsAppIcon } from "@/components/icons";
+import { isPreview } from "@/lib/catalog";
 import { defaultLocale, dictionaries, isLocale, locales } from "@/lib/i18n";
 import { site, whatsappLink } from "@/lib/site";
-import { geistSans } from "../fonts";
+import { poppins } from "../fonts";
 import "../globals.css";
 
 export function generateStaticParams() {
@@ -20,7 +21,12 @@ export async function generateMetadata(props: LayoutProps<"/[lang]">): Promise<M
     title: { default: `${site.name} | Dar es Salaam`, template: `%s | ${site.shortName}` },
     description: t.siteDescription,
     alternates: { canonical: `/${lang}`, languages: { en: "/en", sw: "/sw", "x-default": `/${defaultLocale}` } },
-    openGraph: { siteName: site.name, type: "website", locale: lang === "sw" ? "sw_TZ" : "en_TZ" },
+    openGraph: {
+      siteName: site.name,
+      type: "website",
+      locale: lang === "sw" ? "sw_TZ" : "en_TZ",
+      images: [{ url: "/og.png", width: 1200, height: 630, alt: site.name }],
+    },
   };
 }
 
@@ -32,9 +38,12 @@ export default async function SiteLayout({ children, params }: LayoutProps<"/[la
   const t = dictionaries[lang];
 
   return (
-    <html lang={lang} className={`${geistSans.variable} h-full antialiased`}>
+    <html lang={lang} className={`${poppins.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-sans">
         <SiteHeader />
+        {isPreview && (
+          <p className="bg-[#fff4cc] px-4 py-2 text-center text-xs font-medium text-[#6b5200]">{t.header.preview}</p>
+        )}
         <main className="flex-1">{children}</main>
         <SiteFooter />
         <a

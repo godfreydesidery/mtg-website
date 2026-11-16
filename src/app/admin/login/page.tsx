@@ -10,7 +10,7 @@ export default function LoginPage(props: PageProps<"/admin/login">) {
   return (
     <main className="grid flex-1 place-items-center px-4 py-16">
       <div className="w-full max-w-sm">
-        <div className="mb-8 flex justify-center"><Logo href="/" label="MTG website" /></div>
+        <div className="mb-8 flex justify-center"><Logo href="/" label="MTG website" className="h-14 w-auto" /></div>
         <div className="rounded-2xl border border-line bg-white p-6 shadow-sm">
           <h1 className="text-xl font-black text-ink">Admin login</h1>
           <p className="mt-1 text-sm text-muted">Manage the products on the website.</p>

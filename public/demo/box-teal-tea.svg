@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <rect width="400" height="400" fill="#fff"/>
+  <ellipse cx="200" cy="350" rx="120" ry="12" fill="#000" opacity=".06"/>
+  <path d="M110 110 L250 86 L310 112 L170 136 Z" fill="#0f8a8a" opacity=".75"/>
+  <path d="M110 110 L170 136 L170 346 L110 322 Z" fill="#0f8a8a" opacity=".9"/>
+  <path d="M170 136 L310 112 L310 322 L170 346 Z" fill="#0f8a8a"/>
+  <path d="M186 168 L296 150 L296 262 L186 280 Z" fill="#fff"/>
+  <text x="241" y="226" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-weight="700" font-size="24" fill="#1b1b1b" transform="skewY(-9) translate(0 38)">TEA</text>
+</svg>
