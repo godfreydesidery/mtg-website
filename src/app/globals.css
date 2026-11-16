@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+/* MTG brand colours, taken from the logo: navy lettering, green bag and plane. */
+@theme {
+  --color-navy-50: #eef3fb;
+  --color-navy-100: #d6e1f3;
+  --color-navy-600: #12428a;
+  --color-navy-700: #0c3573;
+  --color-navy-800: #0a2c5f;
+  --color-navy-900: #081f44;
+  --color-leaf-50: #edf7ed;
+  --color-leaf-100: #d3ecd3;
+  --color-leaf-500: #2a9a2a;
+  --color-leaf-600: #1f7f1f;
+  --color-leaf-700: #186618;
+  --color-ink: #13203a;
+  --color-muted: #5b6780;
+  --color-line: #e3e8f0;
+  --color-paper: #f6f8fb;
+  --font-sans: var(--font-geist-sans);
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+/* Visible keyboard focus everywhere. */
+:focus-visible {
+  outline: 2px solid var(--color-leaf-500);
+  outline-offset: 2px;
+}
