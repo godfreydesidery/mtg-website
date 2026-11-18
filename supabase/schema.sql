@@ -110,6 +110,21 @@ create policy "admins delete products" on public.products
   for delete to authenticated using (public.is_admin());
 
 -- ---------------------------------------------------------------------------
+-- Table access for the website. Newer Supabase projects don't give the
+-- website's roles access to tables created in SQL, so it is granted here.
+-- The row level security policies above still decide which rows each role
+-- can see or change.
+-- ---------------------------------------------------------------------------
+grant usage on schema public to anon, authenticated;
+
+grant select on public.categories, public.products to anon, authenticated;
+grant insert, update, delete on public.categories, public.products to authenticated;
+grant select on public.admins to authenticated;
+
+grant usage, select on sequence public.categories_id_seq to authenticated;
+grant execute on function public.is_admin() to anon, authenticated;
+
+-- ---------------------------------------------------------------------------
 -- Photo storage: public bucket, only admins can upload or delete.
 -- ---------------------------------------------------------------------------
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
