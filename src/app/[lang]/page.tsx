@@ -8,6 +8,7 @@ import { site, whatsappLink } from "@/lib/site";
 import { photoUrl } from "@/lib/supabase/env";
 import type { Category, Product } from "@/lib/types";
 import { ProductGrid } from "@/components/product-card";
+import { PageTransition } from "@/components/page-transition";
 import { ArrowRightIcon, PinIcon, PlaneIcon, StoreIcon, TruckIcon, WhatsAppIcon } from "@/components/icons";
 
 export default async function HomePage() {
@@ -31,7 +32,7 @@ export default async function HomePage() {
     .slice(0, 2);
 
   return (
-    <>
+    <PageTransition>
       {/* ---------- Promo banners ---------- */}
       <section className="bg-leaf-600">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 px-4 py-6 md:grid-cols-4 md:grid-rows-[repeat(2,minmax(230px,auto))] lg:gap-6 lg:py-8">
@@ -149,7 +150,7 @@ export default async function HomePage() {
           </a>
         </Banner>
       </section>
-    </>
+    </PageTransition>
   );
 }
 

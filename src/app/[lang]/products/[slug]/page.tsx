@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "@/components/app-link";
 import { notFound } from "next/navigation";
-import { ViewTransition } from "react";
+import { PageTransition } from "@/components/page-transition";
 import { getCategories, getProductBySlug, getProducts, isOnSale } from "@/lib/catalog";
 import { getI18n } from "@/lib/locale";
 import { categoryName, productDescription } from "@/lib/i18n";
@@ -47,7 +47,7 @@ export default async function ProductPage(props: PageProps<"/[lang]/products/[sl
   const sale = isOnSale(product);
 
   return (
-    <ViewTransition enter="slide-up" default="none">
+    <PageTransition>
       <div className="mx-auto max-w-7xl px-4 py-6 sm:py-10">
         <nav aria-label="Breadcrumb" className="mb-5 flex flex-wrap items-center gap-1.5 text-sm text-muted">
           <Link href={`/${locale}`} className="hover:text-ink">{t.nav.home}</Link>
@@ -102,6 +102,6 @@ export default async function ProductPage(props: PageProps<"/[lang]/products/[sl
           </section>
         )}
       </div>
-    </ViewTransition>
+    </PageTransition>
   );
 }

@@ -1,7 +1,8 @@
+import Form from "next/form";
 import type { Dictionary, Locale } from "@/lib/i18n";
 import { ArrowRightIcon, SearchIcon } from "./icons";
 
-/** Plain GET form, so search works even before JavaScript loads. */
+/** Search form. Opens results without reloading the page (next/form), and still works before JavaScript loads. */
 export function SearchBox({
   locale,
   t,
@@ -17,7 +18,7 @@ export function SearchBox({
 }) {
   const id = variant === "header" ? "q-header" : "q";
   return (
-    <form action={`/${locale}/products`} role="search" className="relative w-full">
+    <Form action={`/${locale}/products`} role="search" className="relative w-full">
       <label htmlFor={id} className="sr-only">{t.search.label}</label>
       <SearchIcon className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-ink" />
       {category && <input type="hidden" name="category" value={category} />}
@@ -36,6 +37,6 @@ export function SearchBox({
         <span className="hidden sm:inline">{t.search.button}</span> <ArrowRightIcon className="size-5 sm:size-4" />
         <span className="sr-only sm:hidden">{t.search.button}</span>
       </button>
-    </form>
+    </Form>
   );
 }

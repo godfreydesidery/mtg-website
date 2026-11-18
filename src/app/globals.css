@@ -110,9 +110,34 @@ details[open] > .dropdown-panel {
   from { opacity: 0; translate: 0 24px; }
 }
 
-/* Page and list transitions (React <ViewTransition>). */
+/* Page and list transitions (React <ViewTransition>). Opacity and small moves
+   only (no blur), so they stay smooth on low-end phones. */
 ::view-transition {
   pointer-events: none; /* clicks during an animation still reach the page */
+}
+
+/* Moving between pages: the old page fades out quickly, the new one fades in
+   and rises slightly (see page-transition.tsx). */
+::view-transition-old(.page-out) {
+  animation: 120ms ease-out both vt-fade reverse;
+}
+::view-transition-new(.page-in) {
+  animation: 220ms ease-out 80ms both vt-fade, 300ms ease-out both vt-slide-y;
+}
+::view-transition-group(root) {
+  animation-duration: 200ms;
+}
+
+/* Full page loads within the site (e.g. switching between the shop and admin)
+   crossfade too, in browsers that support it, instead of flashing white. */
+@view-transition {
+  navigation: auto;
+}
+
+/* Loading skeletons stay hidden for the first 300ms, so a quick load goes
+   straight to the content instead of flashing a skeleton for a split second. */
+.skeleton-delay {
+  animation: vt-fade 200ms ease-out 300ms both;
 }
 ::view-transition-old(.slide-down) {
   animation: 150ms ease-out both vt-fade reverse, 150ms ease-out both vt-slide-y reverse;
@@ -124,8 +149,8 @@ details[open] > .dropdown-panel {
   animation-duration: 250ms;
 }
 @keyframes vt-fade {
-  from { opacity: 0; filter: blur(3px); }
-  to { opacity: 1; filter: blur(0); }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 @keyframes vt-slide-y {
   from { transform: translateY(10px); }
