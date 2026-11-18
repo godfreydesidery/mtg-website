@@ -13,6 +13,9 @@ export function isLocale(value: string | undefined): value is Locale {
 
 const en = {
   langName: "English",
+  address: "Mpakani A, Kijitonyama, Dar es Salaam",
+  breadcrumb: "Breadcrumb",
+  language: "Language",
   nav: { home: "Home", products: "Products", contact: "Contact" },
   siteDescription:
     "Health supplements, personal care, baby and household products in Dar es Salaam. Browse our products and order on WhatsApp.",
@@ -69,7 +72,7 @@ const en = {
       ["Order on WhatsApp", "Tap the button on any product and we reply quickly."],
       ["Delivery available", "Ask us about delivery to your area."],
       ["Air cargo orders", "We bring products from abroad for you."],
-      ["Visit our shop", "Mtaa wa Mpakani A, Kijitonyama, Dar es Salaam."],
+      ["Visit our shop", "Mpakani A, Kijitonyama, Dar es Salaam."],
     ],
     featuredTitle: "Our best sellers",
     featuredText: "Customer favourites, picked by our team. Tap any product to see the details and order on WhatsApp.",
@@ -140,13 +143,16 @@ export type Dictionary = typeof en;
 
 const sw: Dictionary = {
   langName: "Kiswahili",
+  address: "Mtaa wa Mpakani A, Kijitonyama, Dar es Salaam",
+  breadcrumb: "Ulipo",
+  language: "Lugha",
   nav: { home: "Mwanzo", products: "Bidhaa", contact: "Wasiliana" },
   siteDescription:
     "Virutubisho vya afya, bidhaa za usafi binafsi, za watoto na za nyumbani jijini Dar es Salaam. Angalia bidhaa zetu na uagize kwa WhatsApp.",
   logoLabel: "MTG General Store and Logistics, mwanzo",
   callForPrice: "Uliza bei",
   whatsappFloat: "Ongea nasi kwa WhatsApp",
-  search: { label: "Tafuta bidhaa", placeholder: "Tafuta bidhaa, mf. vitamin C", button: "Tafuta" },
+  search: { label: "Tafuta bidhaa", placeholder: "Tafuta bidhaa, mf. vitamini C", button: "Tafuta" },
   header: {
     topMessage: "Agiza kwa WhatsApp: tunathibitisha bei, upatikanaji na usafirishaji pamoja nawe.",
     callUs: "Tupigie",
@@ -188,14 +194,14 @@ const sw: Dictionary = {
       cargo: {
         kicker: "MTG Logistics",
         title: "Tunakuletea",
-        text: "Hupati bidhaa hapa Tanzania? Tunakuagizia kwa usafiri wa anga (air cargo).",
+        text: "Hupati bidhaa hapa Tanzania? Tunakuagizia na kukuletea kwa ndege.",
         cta: "Uliza kwa WhatsApp",
       },
     },
     features: [
       ["Agiza kwa WhatsApp", "Bonyeza kitufe kwenye bidhaa yoyote, tunajibu haraka."],
       ["Usafirishaji upo", "Tuulize kuhusu kufikishiwa bidhaa eneo lako."],
-      ["Oda za air cargo", "Tunakuletea bidhaa kutoka nje ya nchi."],
+      ["Kuagiza kwa ndege", "Tunakuletea bidhaa kutoka nje ya nchi."],
       ["Tembelea duka letu", "Mtaa wa Mpakani A, Kijitonyama, Dar es Salaam."],
     ],
     featuredTitle: "Bidhaa zinazopendwa",

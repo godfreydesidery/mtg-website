@@ -24,7 +24,7 @@ export default async function ProductsPage(props: PageProps<"/[lang]/products">)
     <PageTransition>
       <div className="border-b border-line bg-white">
         <div className="mx-auto max-w-7xl px-4 py-6">
-          <nav aria-label="Breadcrumb" className="text-sm text-muted">
+          <nav aria-label={t.breadcrumb} className="text-sm text-muted">
             <Link href={`/${locale}`} className="hover:text-leaf-700">{t.nav.home}</Link> <span aria-hidden="true">/</span> {t.list.title}
           </nav>
           <h1 className="mt-1 text-2xl font-extrabold text-ink sm:text-3xl">{t.list.title}</h1>

@@ -141,9 +141,9 @@ export default async function HomePage() {
             <WhatsAppIcon className="size-4" /> {t.header.orderOn}
           </a>
         </Banner>
-        <Banner className="bg-leaf-700" icon={<StoreIcon className="size-16" />} kicker={h.visitKicker} title={h.visitTitle} text={site.address}>
+        <Banner className="bg-leaf-700" icon={<StoreIcon className="size-16" />} kicker={h.visitKicker} title={h.visitTitle} text={t.address}>
           <a
-            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.mapQuery)}`}
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.mapQuery)}&hl=${locale}`}
             className="inline-flex items-center gap-2 bg-white/15 px-5 py-3 text-xs font-bold uppercase tracking-wide text-white hover:bg-white/25"
           >
             <PinIcon className="size-4" /> {h.visitCta}

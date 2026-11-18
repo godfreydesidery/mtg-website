@@ -14,13 +14,13 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ContactPage() {
-  const { t } = await getI18n();
+  const { locale, t } = await getI18n();
   const c = t.contact;
   const items = [
     { icon: <WhatsAppIcon />, label: c.whatsapp, value: site.phoneDisplay, href: whatsappLink(t.msg.hello) },
     { icon: <PhoneIcon />, label: c.call, value: site.phoneDisplay, href: `tel:${site.phone}` },
     { icon: <MailIcon />, label: c.email, value: site.email, href: `mailto:${site.email}` },
-    { icon: <PinIcon />, label: c.location, value: site.address, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.mapQuery)}` },
+    { icon: <PinIcon />, label: c.location, value: t.address, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.mapQuery)}&hl=${locale}` },
   ];
 
   return (
@@ -45,7 +45,7 @@ export default async function ContactPage() {
           </ul>
           <iframe
             title={c.mapTitle}
-            src={`https://www.google.com/maps?q=${encodeURIComponent(site.mapQuery)}&output=embed`}
+            src={`https://www.google.com/maps?q=${encodeURIComponent(site.mapQuery)}&hl=${locale}&output=embed`}
             className="h-80 w-full rounded-2xl border border-line bg-white lg:h-full lg:min-h-96"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
