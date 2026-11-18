@@ -49,7 +49,7 @@ export default async function SiteLayout({ children, params }: LayoutProps<"/[la
         <a
           href={whatsappLink(t.msg.question)}
           aria-label={t.whatsappFloat}
-          className="fixed bottom-5 right-5 z-40 grid size-14 place-items-center rounded-full bg-leaf-600 text-white shadow-lg shadow-navy-900/20 hover:bg-leaf-700"
+          className="wa-ping fixed bottom-5 right-5 z-40 grid size-14 place-items-center rounded-full bg-leaf-600 text-white shadow-lg shadow-navy-900/20 transition hover:scale-105 hover:bg-leaf-700 active:scale-95"
         >
           <WhatsAppIcon className="size-7" />
         </a>

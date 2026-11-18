@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { Suspense } from "react";
 import { Logo } from "./logo";
 import { Disclosure } from "./disclosure";

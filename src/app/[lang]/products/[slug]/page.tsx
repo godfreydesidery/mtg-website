@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { notFound } from "next/navigation";
+import { ViewTransition } from "react";
 import { getCategories, getProductBySlug, getProducts, isOnSale } from "@/lib/catalog";
 import { getI18n } from "@/lib/locale";
 import { categoryName, productDescription } from "@/lib/i18n";
@@ -46,59 +47,61 @@ export default async function ProductPage(props: PageProps<"/[lang]/products/[sl
   const sale = isOnSale(product);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-6 sm:py-10">
-      <nav aria-label="Breadcrumb" className="mb-5 flex flex-wrap items-center gap-1.5 text-sm text-muted">
-        <Link href={`/${locale}`} className="hover:text-ink">{t.nav.home}</Link>
-        <span aria-hidden="true">/</span>
-        <Link href={`/${locale}/products`} className="hover:text-ink">{t.nav.products}</Link>
-        {category && (
-          <>
-            <span aria-hidden="true">/</span>
-            <Link href={`/${locale}/products?category=${category.slug}`} className="hover:text-ink">{catName}</Link>
-          </>
-        )}
-      </nav>
-
-      <div className="grid gap-8 bg-white p-4 ring-1 ring-line sm:p-8 md:grid-cols-2 md:gap-12">
-        <Gallery images={product.images.map(photoUrl)} name={product.name} showPhotoLabel={p.showPhoto} />
-
-        <div>
-          {category && <p className="text-xs font-semibold uppercase tracking-wider text-leaf-600">{catName}</p>}
-          <h1 className="mt-1 text-2xl font-bold text-ink sm:text-3xl">{product.name}</h1>
-          <p className="mt-4 flex flex-wrap items-baseline gap-x-3">
-            {sale && <s className="text-lg text-muted">{formatPrice(product.old_price)}</s>}
-            <span className={`text-3xl font-bold ${sale ? "text-red-600" : "text-navy-700"}`}>{price}</span>
-            {sale && <span className="rounded bg-red-600 px-2 py-0.5 text-xs font-semibold text-white">{t.sale}</span>}
-          </p>
-          <p className={`mt-3 inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-semibold ${product.in_stock ? "bg-leaf-50 text-leaf-700" : "bg-navy-50 text-muted"}`}>
-            <span className={`size-2 rounded-full ${product.in_stock ? "bg-leaf-500" : "bg-muted"}`} />
-            {product.in_stock ? p.inStock : p.outOfStockLong}
-          </p>
-
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <a href={whatsappLink(message)} className="inline-flex items-center justify-center gap-2 bg-leaf-600 px-6 py-3.5 font-bold text-white hover:bg-leaf-700">
-              <WhatsAppIcon /> {p.order}
-            </a>
-            <a href={`tel:${site.phone}`} className="inline-flex items-center justify-center gap-2 border-2 border-ink bg-white px-6 py-3.5 font-bold text-ink hover:bg-ink hover:text-white">
-              <PhoneIcon /> {p.call} {site.phoneDisplay}
-            </a>
-          </div>
-
-          {description && (
-            <div className="mt-8 border-t border-line pt-6">
-              <h2 className="mb-2 font-bold text-ink">{p.about}</h2>
-              <p className="whitespace-pre-line leading-relaxed text-muted">{description}</p>
-            </div>
+    <ViewTransition enter="slide-up" default="none">
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:py-10">
+        <nav aria-label="Breadcrumb" className="mb-5 flex flex-wrap items-center gap-1.5 text-sm text-muted">
+          <Link href={`/${locale}`} className="hover:text-ink">{t.nav.home}</Link>
+          <span aria-hidden="true">/</span>
+          <Link href={`/${locale}/products`} className="hover:text-ink">{t.nav.products}</Link>
+          {category && (
+            <>
+              <span aria-hidden="true">/</span>
+              <Link href={`/${locale}/products?category=${category.slug}`} className="hover:text-ink">{catName}</Link>
+            </>
           )}
-        </div>
-      </div>
+        </nav>
 
-      {related.length > 0 && (
-        <section className="mt-14">
-          <h2 className="mb-4 text-xl font-extrabold text-ink">{p.moreIn(catName || p.thisCategory)}</h2>
-          <ProductGrid products={related} categories={categories} locale={locale} t={t} />
-        </section>
-      )}
-    </div>
+        <div className="grid gap-8 bg-white p-4 ring-1 ring-line sm:p-8 md:grid-cols-2 md:gap-12">
+          <Gallery images={product.images.map(photoUrl)} name={product.name} showPhotoLabel={p.showPhoto} />
+
+          <div>
+            {category && <p className="text-xs font-semibold uppercase tracking-wider text-leaf-600">{catName}</p>}
+            <h1 className="mt-1 text-2xl font-bold text-ink sm:text-3xl">{product.name}</h1>
+            <p className="mt-4 flex flex-wrap items-baseline gap-x-3">
+              {sale && <s className="text-lg text-muted">{formatPrice(product.old_price)}</s>}
+              <span className={`text-3xl font-bold ${sale ? "text-red-600" : "text-navy-700"}`}>{price}</span>
+              {sale && <span className="rounded bg-red-600 px-2 py-0.5 text-xs font-semibold text-white">{t.sale}</span>}
+            </p>
+            <p className={`mt-3 inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-semibold ${product.in_stock ? "bg-leaf-50 text-leaf-700" : "bg-navy-50 text-muted"}`}>
+              <span className={`size-2 rounded-full ${product.in_stock ? "bg-leaf-500" : "bg-muted"}`} />
+              {product.in_stock ? p.inStock : p.outOfStockLong}
+            </p>
+
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <a href={whatsappLink(message)} className="inline-flex items-center justify-center gap-2 bg-leaf-600 px-6 py-3.5 font-bold text-white hover:bg-leaf-700">
+                <WhatsAppIcon /> {p.order}
+              </a>
+              <a href={`tel:${site.phone}`} className="inline-flex items-center justify-center gap-2 border-2 border-ink bg-white px-6 py-3.5 font-bold text-ink hover:bg-ink hover:text-white">
+                <PhoneIcon /> {p.call} {site.phoneDisplay}
+              </a>
+            </div>
+
+            {description && (
+              <div className="mt-8 border-t border-line pt-6">
+                <h2 className="mb-2 font-bold text-ink">{p.about}</h2>
+                <p className="whitespace-pre-line leading-relaxed text-muted">{description}</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {related.length > 0 && (
+          <section className="mt-14">
+            <h2 className="mb-4 text-xl font-extrabold text-ink">{p.moreIn(catName || p.thisCategory)}</h2>
+            <ProductGrid products={related} categories={categories} locale={locale} t={t} />
+          </section>
+        )}
+      </div>
+    </ViewTransition>
   );
 }

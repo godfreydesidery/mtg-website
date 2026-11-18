@@ -39,7 +39,7 @@ export function Disclosure({
     <details ref={ref} className={`group ${className ?? ""}`}>
       <summary className={`cursor-pointer list-none [&::-webkit-details-marker]:hidden ${summaryClassName ?? ""}`}>{summary}</summary>
       <div
-        className={panelClassName}
+        className={`dropdown-panel ${panelClassName ?? ""}`}
         onClick={(e) => {
           if ((e.target as HTMLElement).closest("a") && ref.current) ref.current.open = false;
         }}

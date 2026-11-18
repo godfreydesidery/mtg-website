@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/app-link";
 
 // The official MTG logo. Files in /public:
 //   logo-wide.png  symbol + "MTG" + tagline side by side (header, footer)

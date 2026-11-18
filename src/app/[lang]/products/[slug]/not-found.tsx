@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { getI18n } from "@/lib/locale";
 
 export default async function ProductNotFound() {
