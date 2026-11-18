@@ -21,8 +21,29 @@ export async function signIn(_prev: FormState, formData: FormData): Promise<Form
 
   const supabase = await createSessionClient();
   const { error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) return { error: "Wrong email or password." };
+  if (error) {
+    console.error(`Admin login failed for ${email}: [${error.code ?? error.status}] ${error.message}`);
+    return { error: loginErrorMessage(error.code, error.message) };
+  }
   redirect("/admin");
+}
+
+// Supabase's reason for a failed login, in plain words, so a set-up problem
+// (unconfirmed email, email login turned off) isn't mistaken for a typo.
+function loginErrorMessage(code: string | undefined, message: string) {
+  switch (code) {
+    case "invalid_credentials":
+      return "Wrong email or password.";
+    case "email_not_confirmed":
+      return "This email is not confirmed yet. Confirm it in Supabase (Authentication → Users).";
+    case "email_provider_disabled":
+      return "Email login is turned off in Supabase (Authentication → Sign In / Providers → Email).";
+    case "over_request_rate_limit":
+    case "over_email_send_rate_limit":
+      return "Too many attempts. Wait a few minutes and try again.";
+    default:
+      return `Login failed: ${message}`;
+  }
 }
 
 export async function signOut() {
