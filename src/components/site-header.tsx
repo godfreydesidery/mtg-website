@@ -9,7 +9,7 @@ import { site, whatsappLink } from "@/lib/site";
 import { getI18n } from "@/lib/locale";
 import { getCategories } from "@/lib/catalog";
 import { categoryName, type Locale } from "@/lib/i18n";
-import type { Category } from "@/lib/types";
+import { splitBySection, type Category } from "@/lib/types";
 
 // Three rows, like a classic shop header:
 //   1. green announcement bar (message, call, language)
@@ -81,7 +81,7 @@ export async function SiteHeader() {
               }
               panelClassName="absolute left-0 top-full z-40 max-h-[70vh] w-full overflow-y-auto border border-line bg-white py-2 shadow-xl"
             >
-              <CategoryLinks locale={locale} categories={categories} allLabel={h.allProducts} />
+              <CategoryLinks locale={locale} categories={categories} allLabel={h.allProducts} logisticsLabel={h.logistics} />
             </Disclosure>
             <nav className="flex items-stretch">
               <Suspense fallback={<PlainNavLinks locale={locale} labels={t.nav} variant="bar" />}>
@@ -99,7 +99,25 @@ export async function SiteHeader() {
   );
 }
 
-function CategoryLinks({ locale, categories, allLabel }: { locale: Locale; categories: Category[]; allLabel: string }) {
+function CategoryLinks({
+  locale,
+  categories,
+  allLabel,
+  logisticsLabel,
+}: {
+  locale: Locale;
+  categories: Category[];
+  allLabel: string;
+  logisticsLabel: string;
+}) {
+  const { shop, logistics } = splitBySection(categories);
+  const item = (c: Category) => (
+    <li key={c.id}>
+      <Link href={`/${locale}/products?category=${c.slug}`} className="block px-5 py-2 text-sm text-ink hover:bg-leaf-50 hover:text-leaf-700">
+        {categoryName(c, locale)}
+      </Link>
+    </li>
+  );
   return (
     <ul>
       <li>
@@ -107,13 +125,13 @@ function CategoryLinks({ locale, categories, allLabel }: { locale: Locale; categ
           {allLabel}
         </Link>
       </li>
-      {categories.map((c) => (
-        <li key={c.id}>
-          <Link href={`/${locale}/products?category=${c.slug}`} className="block px-5 py-2 text-sm text-ink hover:bg-leaf-50 hover:text-leaf-700">
-            {categoryName(c, locale)}
-          </Link>
+      {shop.map(item)}
+      {logistics.length > 0 && (
+        <li>
+          <p className="mt-2 border-t border-line px-5 pb-1 pt-3 text-xs font-bold uppercase tracking-wider text-muted">{logisticsLabel}</p>
+          <ul>{logistics.map(item)}</ul>
         </li>
-      ))}
+      )}
     </ul>
   );
 }
@@ -141,7 +159,7 @@ function MobileMenu({
       </nav>
       <p className="mt-4 px-3 text-xs font-bold uppercase tracking-wider text-muted">{t.header.shopByCategories}</p>
       <div className="mt-1 -mx-2">
-        <CategoryLinks locale={locale} categories={categories} allLabel={t.header.allProducts} />
+        <CategoryLinks locale={locale} categories={categories} allLabel={t.header.allProducts} logisticsLabel={t.header.logistics} />
       </div>
       <a href={whatsappLink(t.msg.order)} className="mt-4 flex items-center justify-center gap-2 rounded-lg bg-leaf-600 py-3 font-semibold text-white">
         <WhatsAppIcon /> {t.header.orderOn}

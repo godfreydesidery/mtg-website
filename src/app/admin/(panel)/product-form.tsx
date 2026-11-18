@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useActionState, useRef, useState } from "react";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { PHOTO_BUCKET, photoUrl } from "@/lib/supabase/env";
-import type { Category, Product } from "@/lib/types";
+import { splitBySection, type Category, type Product } from "@/lib/types";
 import { saveProduct } from "../actions";
 import { inputClass, primaryButton, secondaryButton } from "../ui";
 
@@ -145,7 +145,13 @@ export function ProductForm({ product, categories }: { product?: Product; catego
             <span className="mb-1 block text-sm font-semibold text-ink">Category</span>
             <select name="category_id" defaultValue={product?.category_id ?? ""} className={inputClass}>
               <option value="">No category</option>
-              {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+              {Object.entries(splitBySection(categories)).map(([section, list]) =>
+                list.length ? (
+                  <optgroup key={section} label={section === "logistics" ? "Logistics" : "Shop"}>
+                    {list.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                  </optgroup>
+                ) : null,
+              )}
             </select>
           </label>
         </div>
