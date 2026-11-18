@@ -20,12 +20,15 @@ const categoryList: [string, string][] = [
   ["Joint Health", "Afya ya Viungo"],
 ];
 
-export const previewCategories: Category[] = categoryList.map(([name, name_sw], i) => ({
-  id: -(i + 1),
-  name,
-  name_sw,
-  slug: slugify(name),
-}));
+const logisticsList: [string, string][] = [
+  ["Air Cargo Freight", "Usafirishaji wa Mizigo kwa Ndege"],
+  ["Air Cargo Order", "Oda za Air Cargo"],
+];
+
+export const previewCategories: Category[] = [
+  ...categoryList.map(([name, name_sw]) => ({ name, name_sw, section: "shop" as const })),
+  ...logisticsList.map(([name, name_sw]) => ({ name, name_sw, section: "logistics" as const })),
+].map((c, i) => ({ ...c, id: -(i + 1), slug: slugify(c.name) }));
 
 const cat = (name: string) => previewCategories.find((c) => c.name === name)!.id;
 

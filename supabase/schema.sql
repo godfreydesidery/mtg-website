@@ -34,11 +34,15 @@ create table if not exists public.categories (
   name text not null unique,
   name_sw text,                                             -- Swahili name (optional; English is used if empty)
   slug text not null unique,
+  section text not null default 'shop',                     -- 'shop' = store products, 'logistics' = MTG Logistics services
   sort_order int not null default 0,
   created_at timestamptz not null default now()
 );
 
 alter table public.categories add column if not exists name_sw text;
+alter table public.categories add column if not exists section text not null default 'shop';
+alter table public.categories drop constraint if exists categories_section_check;
+alter table public.categories add constraint categories_section_check check (section in ('shop', 'logistics'));
 
 alter table public.categories enable row level security;
 
@@ -176,6 +180,33 @@ insert into public.categories (name, name_sw, slug, sort_order) values
   ('Joint Health', 'Afya ya Viungo', 'joint-health', 270),
   ('Kidney Support', 'Afya ya Figo', 'kidney-support', 280)
 on conflict (slug) do update set name_sw = coalesce(public.categories.name_sw, excluded.name_sw);
+
+-- Added from MTG's full category list (November 2026). Skips any category that
+-- already exists with the same name or web address, e.g. one added in /admin.
+insert into public.categories (name, name_sw, slug, section, sort_order) values
+  ('Laundry', 'Sabuni na Vifaa vya Kufulia', 'laundry', 'shop', 290),
+  ('Liver Support', 'Afya ya Ini', 'liver-support', 'shop', 300),
+  ('Makeup', 'Vipodozi', 'makeup', 'shop', 310),
+  ('Men''s Health', 'Afya ya Wanaume', 'mens-health', 'shop', 320),
+  ('Men''s Products', 'Bidhaa za Wanaume', 'mens-products', 'shop', 330),
+  ('Mood & Anxiety', 'Hisia na Wasiwasi', 'mood-and-anxiety', 'shop', 340),
+  ('Multivitamins', 'Multivitamini', 'multivitamins', 'shop', 350),
+  ('Packaging', 'Vifungashio', 'packaging', 'shop', 360),
+  ('Pregnancy & Fertility', 'Ujauzito na Uzazi', 'pregnancy-and-fertility', 'shop', 370),
+  ('Rice', 'Mchele', 'rice', 'shop', 380),
+  ('Serum', 'Seramu za Ngozi', 'serum', 'shop', 390),
+  ('Sexual Health', 'Afya ya Tendo la Ndoa', 'sexual-health', 'shop', 400),
+  ('Skincare', 'Utunzaji wa Ngozi', 'skincare', 'shop', 410),
+  ('Sleep & Relaxation', 'Usingizi na Utulivu', 'sleep-and-relaxation', 'shop', 420),
+  ('Stress', 'Msongo wa Mawazo', 'stress', 'shop', 430),
+  ('Sun Cream & Lotion', 'Krimu na Losheni za Jua', 'sun-cream-and-lotion', 'shop', 440),
+  ('Supplements', 'Virutubisho', 'supplements', 'shop', 450),
+  ('Technical Equipment', 'Vifaa vya Kiufundi', 'technical-equipment', 'shop', 460),
+  ('Washing and Bathing', 'Kuosha na Kuoga', 'washing-and-bathing', 'shop', 470),
+  ('Women''s Health', 'Afya ya Wanawake', 'womens-health', 'shop', 480),
+  ('Air Cargo Freight', 'Usafirishaji wa Mizigo kwa Ndege', 'air-cargo-freight', 'logistics', 1000),
+  ('Air Cargo Order', 'Oda za Air Cargo', 'air-cargo-order', 'logistics', 1010)
+on conflict do nothing;
 
 -- ---------------------------------------------------------------------------
 -- After creating the owner's login (Authentication -> Users -> Add user),

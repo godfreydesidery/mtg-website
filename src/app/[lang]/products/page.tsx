@@ -6,6 +6,7 @@ import { getI18n } from "@/lib/locale";
 import { categoryName } from "@/lib/i18n";
 import { ProductGrid, ProductGridSkeleton } from "@/components/product-card";
 import { whatsappLink } from "@/lib/site";
+import { splitBySection, type Category } from "@/lib/types";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getI18n();
@@ -84,6 +85,12 @@ async function Results({ searchParams }: { searchParams: PageProps<"/[lang]/prod
       active ? "border-leaf-600 bg-leaf-50 font-semibold text-leaf-700" : "border-transparent text-ink hover:bg-paper hover:text-leaf-700"
     }`;
   const l = t.list;
+  const sections = splitBySection(categories);
+  const sideLink = (c: Category) => (
+    <Link key={c.id} href={withQuery(c.slug)} className={side(c.id === category?.id)}>
+      {categoryName(c, locale)} <span className="text-xs text-muted">{counts.get(c.id) ?? 0}</span>
+    </Link>
+  );
 
   return (
     <div className="grid gap-6 lg:grid-cols-[250px_1fr] lg:gap-8">
@@ -95,11 +102,13 @@ async function Results({ searchParams }: { searchParams: PageProps<"/[lang]/prod
             <Link href={withQuery()} className={side(!category)}>
               {l.all} <span className="text-xs text-muted">{products.length}</span>
             </Link>
-            {categories.map((c) => (
-              <Link key={c.id} href={withQuery(c.slug)} className={side(c.id === category?.id)}>
-                {categoryName(c, locale)} <span className="text-xs text-muted">{counts.get(c.id) ?? 0}</span>
-              </Link>
-            ))}
+            {sections.shop.map(sideLink)}
+            {sections.logistics.length > 0 && (
+              <>
+                <p className="mt-2 border-t border-line px-4 pb-1 pt-3 text-xs font-bold uppercase tracking-wider text-muted">{t.header.logistics}</p>
+                {sections.logistics.map(sideLink)}
+              </>
+            )}
           </nav>
         </div>
       </aside>
@@ -107,7 +116,7 @@ async function Results({ searchParams }: { searchParams: PageProps<"/[lang]/prod
       <div className="min-w-0">
         <nav aria-label={l.categoriesLabel} className="-mx-4 mb-4 flex gap-2 overflow-x-auto px-4 pb-2 lg:hidden">
           <Link href={withQuery()} className={chip(!category)}>{l.all}</Link>
-          {categories.map((c) => (
+          {[...sections.shop, ...sections.logistics].map((c) => (
             <Link key={c.id} href={withQuery(c.slug)} className={chip(c.id === category?.id)}>{categoryName(c, locale)}</Link>
           ))}
         </nav>

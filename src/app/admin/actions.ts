@@ -6,6 +6,7 @@ import { requireAdmin } from "@/lib/admin";
 import { createSessionClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured, PHOTO_BUCKET } from "@/lib/supabase/env";
 import { slugify } from "@/lib/slug";
+import type { CategorySection } from "@/lib/types";
 
 export type FormState = { error?: string; ok?: string } | undefined;
 
@@ -134,29 +135,34 @@ export async function addCategory(_prev: FormState, formData: FormData): Promise
   const { supabase } = await requireAdmin();
   const name = String(formData.get("name") ?? "").trim();
   const name_sw = String(formData.get("name_sw") ?? "").trim() || null;
+  const section = toSection(formData.get("section"));
   const slug = slugify(name);
   if (!slug) return { error: "Enter the English category name." };
 
-  const { error } = await supabase.from("categories").insert({ name, name_sw, slug });
+  const { error } = await supabase.from("categories").insert({ name, name_sw, slug, section });
   if (error) return { error: error.code === "23505" ? "That category already exists." : error.message };
   updateTag("categories");
   refresh();
   return { ok: `Added "${name}".` };
 }
 
-export async function renameCategory(id: number, name: string, nameSw: string): Promise<FormState> {
+export async function renameCategory(id: number, name: string, nameSw: string, section: CategorySection): Promise<FormState> {
   const { supabase } = await requireAdmin();
   const clean = name.trim();
   if (!clean) return { error: "The English name cannot be empty." };
   // The web address (slug) stays the same so shared links keep working.
   const { error } = await supabase
     .from("categories")
-    .update({ name: clean, name_sw: nameSw.trim() || null })
+    .update({ name: clean, name_sw: nameSw.trim() || null, section: toSection(section) })
     .eq("id", id);
   if (error) return { error: error.code === "23505" ? "That name is already used." : error.message };
   updateTag("categories");
   refresh();
   return { ok: "Renamed." };
+}
+
+function toSection(value: unknown): CategorySection {
+  return value === "logistics" ? "logistics" : "shop";
 }
 
 export async function deleteCategory(id: number) {
