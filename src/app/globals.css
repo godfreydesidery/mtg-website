@@ -73,12 +73,30 @@ body {
   to { translate: 250% 0; }
 }
 
-/* Dropdown menus open with a short drop-in. */
+/* Dropdown menus (disclosure.tsx) unfold from the top when opened and fold
+   back up when closed. data-closing is set while the close animation plays. */
+.dropdown-panel {
+  transform-origin: top center;
+}
 details[open] > .dropdown-panel {
-  animation: dropdown-in 160ms ease-out;
+  animation: dropdown-in 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+details[open][data-closing] > .dropdown-panel {
+  animation: dropdown-out 150ms ease-in forwards;
+  pointer-events: none;
 }
 @keyframes dropdown-in {
-  from { opacity: 0; translate: 0 -6px; }
+  from { opacity: 0; translate: 0 -10px; scale: 1 0.94; }
+}
+@keyframes dropdown-out {
+  to { opacity: 0; translate: 0 -10px; scale: 1 0.94; }
+}
+/* The menu entries follow a moment later, so the list settles in after the box. */
+details[open]:not([data-closing]) > .dropdown-panel li {
+  animation: dropdown-item 260ms ease-out 60ms both;
+}
+@keyframes dropdown-item {
+  from { opacity: 0; translate: 0 -4px; }
 }
 
 /* WhatsApp button: a soft ring pulses three times after the page loads. */
@@ -160,8 +178,9 @@ details[open] > .dropdown-panel {
 @media (prefers-reduced-motion: reduce) {
   .reveal,
   .wa-ping::before,
-  details[open] > .dropdown-panel {
-    animation: none;
+  details[open] > .dropdown-panel,
+  details[open] > .dropdown-panel li {
+    animation: none !important;
   }
   .nav-progress[data-pending]::after {
     animation-duration: 3s;
