@@ -8,6 +8,7 @@ import { ProductGrid, ProductGridSkeleton } from "@/components/product-card";
 import { PageTransition } from "@/components/page-transition";
 import { whatsappLink } from "@/lib/site";
 import { splitBySection, type Category } from "@/lib/types";
+import { search } from "@/lib/search";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { t } = await getI18n();
@@ -63,17 +64,14 @@ async function Results({ searchParams }: { searchParams: PageProps<"/[lang]/prod
   const category = categories.find((c) => c.slug === categorySlug);
   const catName = category ? categoryName(category, locale) : "";
 
-  // Search matches either language, so "afya" and "health" both work.
+  // Search matches either language, so "afya" and "health" both work, and forgives
+  // typos and partial words (see src/lib/search.ts). Best matches come first.
   const searchText = new Map(categories.map((c) => [c.id, `${c.name} ${c.name_sw ?? ""}`]));
-  const words = query.toLowerCase().split(/\s+/).filter(Boolean);
-  const results = products.filter((p) => {
-    if (category && p.category_id !== category.id) return false;
-    if (!words.length) return true;
-    const haystack = `${p.name} ${p.description} ${p.description_sw ?? ""} ${
-      p.category_id ? searchText.get(p.category_id) : ""
-    }`.toLowerCase();
-    return words.every((w) => haystack.includes(w));
-  });
+  const inCategory = category ? products.filter((p) => p.category_id === category.id) : products;
+  const { results, exact } = search(inCategory, query, (p) => ({
+    name: p.name,
+    other: `${p.description} ${p.description_sw ?? ""} ${p.category_id ? searchText.get(p.category_id) ?? "" : ""}`,
+  }));
 
   const counts = new Map<number, number>();
   for (const p of products) if (p.category_id) counts.set(p.category_id, (counts.get(p.category_id) ?? 0) + 1);
@@ -133,10 +131,13 @@ async function Results({ searchParams }: { searchParams: PageProps<"/[lang]/prod
         {/* Crossfades when the category or search changes. */}
         <ViewTransition key={`${categorySlug}|${query}`} name="product-results" share="results" enter="auto" default="none">
           <div>
+            {query && !exact && results.length > 0 && (
+              <p className="mb-2 text-sm font-medium text-ink">{l.similar(query)}</p>
+            )}
             <p className="mb-4 text-sm text-muted">
               {l.count(results.length)}
               {category && <> {l.inCategory} <strong className="text-ink">{catName}</strong></>}
-              {query && <> {l.matching} <strong className="text-ink">“{query}”</strong></>}
+              {query && exact && <> {l.matching} <strong className="text-ink">“{query}”</strong></>}
               {(category || query) && <> · <Link href={base} className="font-semibold text-leaf-700 hover:underline">{l.clear}</Link></>}
             </p>
 
