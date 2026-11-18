@@ -59,7 +59,7 @@ Without the keys the site runs in **preview mode**: it shows sample products (fr
 ### 3. Deploy to Vercel
 
 1. Push this repo to GitHub and import it in Vercel.
-2. Add the three variables from `.env.example` under **Settings → Environment Variables**, then deploy.
+2. Add the three variables from `.env.example` under **Settings → Environment Variables**, then deploy. If the project is linked through Vercel's Supabase integration (prefix `MTG`), it already supplies `NEXT_PUBLIC_MTG_SUPABASE_URL` and `NEXT_PUBLIC_MTG_SUPABASE_ANON_KEY`, which the site also reads. Redeploy after changing any `NEXT_PUBLIC_` variable, because those values are fixed when the site is built.
 3. `vercel.json` sets a daily call to `/api/keepalive`, which keeps the free Supabase project from pausing after a quiet week.
 
 ### 4. Connect the domain
