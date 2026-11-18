@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { formatPrice } from "@/lib/site";
 import { isOnSale } from "@/lib/catalog";
 import { photoUrl } from "@/lib/supabase/env";
@@ -22,7 +22,7 @@ export function ProductCard({
   return (
     <Link
       href={`/${locale}/products/${product.slug}`}
-      className="group flex h-full flex-col bg-white ring-1 ring-line transition hover:z-10 hover:shadow-xl hover:shadow-navy-900/10 hover:ring-leaf-500"
+      className="reveal group flex h-full flex-col bg-white ring-1 ring-line transition hover:z-10 hover:shadow-xl hover:shadow-navy-900/10 hover:ring-leaf-500"
     >
       <div className="relative aspect-square overflow-hidden bg-white">
         {photo && (

@@ -4,6 +4,7 @@ import { useActionState, useState, useTransition } from "react";
 import { splitBySection, type Category, type CategorySection } from "@/lib/types";
 import { addCategory, deleteCategory, renameCategory } from "../../actions";
 import { dangerButton, inputClass, primaryButton, secondaryButton } from "../../ui";
+import { Spinner } from "@/components/spinner";
 
 const sectionLabels: Record<CategorySection, string> = { shop: "Shop", logistics: "Logistics" };
 
@@ -26,7 +27,7 @@ export function CategoryManager({ categories, counts }: { categories: Category[]
         <input name="name" required placeholder="English name, e.g. Eye Health" aria-label="English name" className={inputClass} />
         <input name="name_sw" placeholder="Jina la Kiswahili, mf. Afya ya Macho" aria-label="Swahili name" className={inputClass} />
         <SectionSelect name="section" defaultValue="shop" className={inputClass} />
-        <button type="submit" disabled={adding} className={primaryButton}>Add</button>
+        <button type="submit" disabled={adding} className={primaryButton}>{adding ? <><Spinner /> Adding…</> : "Add"}</button>
       </form>
       {state?.error && <p role="alert" className="-mt-3 mb-4 text-sm font-medium text-red-700">{state.error}</p>}
       {state?.ok && <p role="status" className="-mt-3 mb-4 text-sm font-medium text-leaf-700">{state.ok}</p>}
@@ -88,7 +89,7 @@ function Row({ category, count }: { category: Category; count: number }) {
           <input value={name} onChange={(e) => setName(e.target.value)} aria-label="English name" className={`${inputClass} h-10 min-w-40 flex-1`} autoFocus />
           <input value={nameSw} onChange={(e) => setNameSw(e.target.value)} aria-label="Swahili name" placeholder="Kiswahili" className={`${inputClass} h-10 min-w-40 flex-1`} />
           <SectionSelect value={section} onChange={setSection} className={`${inputClass} h-10 w-auto`} />
-          <button type="button" onClick={save} disabled={pending} className={secondaryButton}>Save</button>
+          <button type="button" onClick={save} disabled={pending} className={secondaryButton}>{pending ? <><Spinner /> Saving…</> : "Save"}</button>
           <button type="button" onClick={cancel} className={secondaryButton}>Cancel</button>
           {error && <p className="w-full text-sm text-red-700">{error}</p>}
         </>

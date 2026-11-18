@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { signIn } from "../actions";
 import { inputClass, primaryButton } from "../ui";
+import { Spinner } from "@/components/spinner";
 
 export function LoginForm() {
   const [state, action, pending] = useActionState(signIn, undefined);
@@ -18,7 +19,7 @@ export function LoginForm() {
       </label>
       {state?.error && <p role="alert" className="text-sm font-medium text-red-700">{state.error}</p>}
       <button type="submit" disabled={pending} className={`${primaryButton} w-full`}>
-        {pending ? "Logging in…" : "Log in"}
+        {pending ? <><Spinner /> Logging in…</> : "Log in"}
       </button>
     </form>
   );

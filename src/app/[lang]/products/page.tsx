@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Suspense } from "react";
+import Link from "@/components/app-link";
+import { Suspense, ViewTransition } from "react";
 import { getCategories, getProducts } from "@/lib/catalog";
 import { getI18n } from "@/lib/locale";
 import { categoryName } from "@/lib/i18n";
@@ -30,8 +30,16 @@ export default async function ProductsPage(props: PageProps<"/[lang]/products">)
         </div>
       </div>
       <div className="mx-auto max-w-7xl px-4 py-6 lg:py-8">
-        <Suspense fallback={<ResultsFallback />}>
-          <Results searchParams={props.searchParams} />
+        <Suspense
+          fallback={
+            <ViewTransition exit="slide-down" default="none">
+              <ResultsFallback />
+            </ViewTransition>
+          }
+        >
+          <ViewTransition enter="slide-up" default="none">
+            <Results searchParams={props.searchParams} />
+          </ViewTransition>
         </Suspense>
       </div>
     </>
@@ -121,27 +129,32 @@ async function Results({ searchParams }: { searchParams: PageProps<"/[lang]/prod
           ))}
         </nav>
 
-        <p className="mb-4 text-sm text-muted">
-          {l.count(results.length)}
-          {category && <> {l.inCategory} <strong className="text-ink">{catName}</strong></>}
-          {query && <> {l.matching} <strong className="text-ink">“{query}”</strong></>}
-          {(category || query) && <> · <Link href={base} className="font-semibold text-leaf-700 hover:underline">{l.clear}</Link></>}
-        </p>
+        {/* Crossfades when the category or search changes. */}
+        <ViewTransition key={`${categorySlug}|${query}`} name="product-results" share="results" enter="auto" default="none">
+          <div>
+            <p className="mb-4 text-sm text-muted">
+              {l.count(results.length)}
+              {category && <> {l.inCategory} <strong className="text-ink">{catName}</strong></>}
+              {query && <> {l.matching} <strong className="text-ink">“{query}”</strong></>}
+              {(category || query) && <> · <Link href={base} className="font-semibold text-leaf-700 hover:underline">{l.clear}</Link></>}
+            </p>
 
-        {results.length ? (
-          <ProductGrid products={results} categories={categories} locale={locale} t={t} className="grid-cols-2 sm:grid-cols-3 xl:grid-cols-4" />
-        ) : (
-          <div className="border border-dashed border-line bg-white p-10 text-center">
-            <p className="font-semibold text-ink">{l.noneTitle}</p>
-            <p className="mt-1 text-sm text-muted">{l.noneText}</p>
-            <a
-              href={whatsappLink(t.msg.doYouHave(query || catName || l.thisProduct))}
-              className="mt-4 inline-block bg-leaf-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-leaf-700"
-            >
-              {l.askWhatsapp}
-            </a>
+            {results.length ? (
+              <ProductGrid products={results} categories={categories} locale={locale} t={t} className="grid-cols-2 sm:grid-cols-3 xl:grid-cols-4" />
+            ) : (
+              <div className="border border-dashed border-line bg-white p-10 text-center">
+                <p className="font-semibold text-ink">{l.noneTitle}</p>
+                <p className="mt-1 text-sm text-muted">{l.noneText}</p>
+                <a
+                  href={whatsappLink(t.msg.doYouHave(query || catName || l.thisProduct))}
+                  className="mt-4 inline-block bg-leaf-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-leaf-700"
+                >
+                  {l.askWhatsapp}
+                </a>
+              </div>
+            )}
           </div>
-        )}
+        </ViewTransition>
       </div>
     </div>
   );

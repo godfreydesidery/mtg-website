@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { notFound } from "next/navigation";
 import { requireAdmin } from "@/lib/admin";
 import { CATEGORY_COLUMNS, PRODUCT_COLUMNS, type Category, type Product } from "@/lib/types";

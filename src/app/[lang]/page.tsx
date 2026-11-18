@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/app-link";
 import type { ReactNode } from "react";
 import { getCategories, getProducts } from "@/lib/catalog";
 import { getI18n } from "@/lib/locale";
@@ -95,7 +95,7 @@ export default async function HomePage() {
 
       {/* ---------- Service points ---------- */}
       <section className="border-b border-line bg-white">
-        <ul className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-8 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="reveal mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-8 sm:grid-cols-2 lg:grid-cols-4">
           {h.features.map(([title, text], i) => (
             <li key={title} className="flex items-start gap-4">
               <span className="shrink-0 text-leaf-600">
@@ -278,7 +278,7 @@ function Banner({
   children: ReactNode;
 }) {
   return (
-    <div className={`relative flex min-h-64 flex-col justify-center gap-3 overflow-hidden p-7 text-white sm:p-10 ${className}`}>
+    <div className={`reveal relative flex min-h-64 flex-col justify-center gap-3 overflow-hidden p-7 text-white sm:p-10 ${className}`}>
       <span className="absolute -right-6 -top-6 text-white/10 [&>svg]:size-48">{icon}</span>
       <p className="relative text-sm font-medium text-white/80">{kicker}</p>
       <h2 className="relative text-2xl font-extrabold leading-tight text-leaf-100 sm:text-3xl">{title}</h2>

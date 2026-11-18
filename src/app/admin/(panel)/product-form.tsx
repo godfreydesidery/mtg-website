@@ -1,13 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/app-link";
 import { useActionState, useRef, useState } from "react";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { PHOTO_BUCKET, photoUrl } from "@/lib/supabase/env";
 import { splitBySection, type Category, type Product } from "@/lib/types";
 import { saveProduct } from "../actions";
 import { inputClass, primaryButton, secondaryButton } from "../ui";
+import { Spinner } from "@/components/spinner";
 
 const MAX_PHOTOS = 6;
 const MAX_SIDE = 1200; // px; keeps photos around 150–300 KB
@@ -194,7 +195,7 @@ export function ProductForm({ product, categories }: { product?: Product; catego
 
       <div className="sticky bottom-0 -mx-4 flex gap-3 border-t border-line bg-paper/95 px-4 py-3 backdrop-blur sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:p-0">
         <button type="submit" disabled={saving || uploading > 0} className={`${primaryButton} flex-1 sm:flex-none`}>
-          {saving ? "Saving…" : uploading > 0 ? "Wait for photos…" : "Save product"}
+          {saving ? <><Spinner /> Saving…</> : uploading > 0 ? <><Spinner /> Wait for photos…</> : "Save product"}
         </button>
         <Link href="/admin" className={`${secondaryButton} h-12 px-5`}>Cancel</Link>
       </div>
