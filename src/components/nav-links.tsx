@@ -59,7 +59,7 @@ const langs: { code: Locale; short: string; name: string }[] = [
 
 function Switch({ locale, hrefFor }: { locale: Locale; hrefFor: (code: Locale) => string }) {
   return (
-    <div className="flex overflow-hidden rounded-md border border-white/40 text-xs font-bold" role="group" aria-label="Language / Lugha">
+    <div className="flex overflow-hidden rounded-md border border-white/40 text-xs font-bold" role="group" aria-label={locale === "sw" ? "Lugha" : "Language"}>
       {langs.map(({ code, short, name }) => (
         <Link
           key={code}

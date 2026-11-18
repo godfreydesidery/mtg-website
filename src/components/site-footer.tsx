@@ -18,7 +18,7 @@ export async function SiteFooter() {
         <div>
           <h2 className="mb-3 text-sm font-bold uppercase tracking-wider text-white">{t.footer.visit}</h2>
           <ul className="space-y-2.5 text-sm">
-            <li className="flex gap-2.5"><PinIcon className="mt-0.5 size-4 shrink-0 text-leaf-500" />{site.address}</li>
+            <li className="flex gap-2.5"><PinIcon className="mt-0.5 size-4 shrink-0 text-leaf-500" />{t.address}</li>
             <li><a className="flex gap-2.5 hover:text-white" href={`tel:${site.phone}`}><PhoneIcon className="mt-0.5 size-4 shrink-0 text-leaf-500" />{site.phoneDisplay}</a></li>
             <li><a className="flex gap-2.5 hover:text-white" href={whatsappLink(t.msg.hello)}><WhatsAppIcon className="mt-0.5 size-4 shrink-0 text-leaf-500" />{t.footer.whatsappUs}</a></li>
             <li><a className="flex gap-2.5 hover:text-white" href={`mailto:${site.email}`}><MailIcon className="mt-0.5 size-4 shrink-0 text-leaf-500" />{site.email}</a></li>

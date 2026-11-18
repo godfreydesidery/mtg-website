@@ -7,8 +7,7 @@ export const site = {
   phone: "+255688523141",
   whatsapp: "255688523141", // international format, digits only
   email: "info@mtgsuppliers.com",
-  area: "Kijitonyama",
-  address: "Mtaa wa Mpakani A, Kijitonyama, Dar es Salaam",
+  area: "Kijitonyama", // the written address is in each language's text (address in src/lib/i18n.ts)
   mapQuery: "Mpakani A, Kijitonyama, Dar es Salaam, Tanzania",
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://mtgsuppliers.com").replace(/\/$/, ""),
 };

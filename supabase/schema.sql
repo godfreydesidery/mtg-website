@@ -205,7 +205,7 @@ insert into public.categories (name, name_sw, slug, section, sort_order) values
   ('Washing and Bathing', 'Kuosha na Kuoga', 'washing-and-bathing', 'shop', 470),
   ('Women''s Health', 'Afya ya Wanawake', 'womens-health', 'shop', 480),
   ('Air Cargo Freight', 'Usafirishaji wa Mizigo kwa Ndege', 'air-cargo-freight', 'logistics', 1000),
-  ('Air Cargo Order', 'Oda za Air Cargo', 'air-cargo-order', 'logistics', 1010)
+  ('Air Cargo Order', 'Kuagiza Bidhaa kwa Ndege', 'air-cargo-order', 'logistics', 1010)
 on conflict do nothing;
 
 -- ---------------------------------------------------------------------------

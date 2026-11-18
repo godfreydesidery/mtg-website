@@ -22,7 +22,7 @@ const categoryList: [string, string][] = [
 
 const logisticsList: [string, string][] = [
   ["Air Cargo Freight", "Usafirishaji wa Mizigo kwa Ndege"],
-  ["Air Cargo Order", "Oda za Air Cargo"],
+  ["Air Cargo Order", "Kuagiza Bidhaa kwa Ndege"],
 ];
 
 export const previewCategories: Category[] = [

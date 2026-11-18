@@ -49,7 +49,7 @@ export default async function ProductPage(props: PageProps<"/[lang]/products/[sl
   return (
     <PageTransition>
       <div className="mx-auto max-w-7xl px-4 py-6 sm:py-10">
-        <nav aria-label="Breadcrumb" className="mb-5 flex flex-wrap items-center gap-1.5 text-sm text-muted">
+        <nav aria-label={t.breadcrumb} className="mb-5 flex flex-wrap items-center gap-1.5 text-sm text-muted">
           <Link href={`/${locale}`} className="hover:text-ink">{t.nav.home}</Link>
           <span aria-hidden="true">/</span>
           <Link href={`/${locale}/products`} className="hover:text-ink">{t.nav.products}</Link>
