@@ -5,6 +5,7 @@ import { getCategories, getProducts } from "@/lib/catalog";
 import { getI18n } from "@/lib/locale";
 import { categoryName } from "@/lib/i18n";
 import { ProductGrid, ProductGridSkeleton } from "@/components/product-card";
+import { PageTransition } from "@/components/page-transition";
 import { whatsappLink } from "@/lib/site";
 import { splitBySection, type Category } from "@/lib/types";
 
@@ -20,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ProductsPage(props: PageProps<"/[lang]/products">) {
   const { locale, t } = await getI18n();
   return (
-    <>
+    <PageTransition>
       <div className="border-b border-line bg-white">
         <div className="mx-auto max-w-7xl px-4 py-6">
           <nav aria-label="Breadcrumb" className="text-sm text-muted">
@@ -42,7 +43,7 @@ export default async function ProductsPage(props: PageProps<"/[lang]/products">)
           </ViewTransition>
         </Suspense>
       </div>
-    </>
+    </PageTransition>
   );
 }
 
@@ -162,7 +163,7 @@ async function Results({ searchParams }: { searchParams: PageProps<"/[lang]/prod
 
 function ResultsFallback() {
   return (
-    <div className="grid gap-6 lg:grid-cols-[250px_1fr] lg:gap-8">
+    <div className="skeleton-delay grid gap-6 lg:grid-cols-[250px_1fr] lg:gap-8" aria-busy="true">
       <div className="hidden h-96 animate-pulse bg-white lg:block" />
       <div><div className="mb-4 h-5 w-40 animate-pulse rounded bg-white" /><ProductGridSkeleton /></div>
     </div>
